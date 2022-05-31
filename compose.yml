@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:5.7.38-debian
+    container_name: typeormsb-container-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: UTC
+      LANG: C.UTF-8
+    ports:
+      - 3306:3306
+    networks:
+      - default
+    platform: linux/amd64
+    volumes:
+      - ./.devcontainer/db/conf:/etc/mysql/conf.d:ro
+      - ./.devcontainer/db/init:/docker-entrypoint-initdb.d:ro
+      - ./.devcontainer/db/logs:/var/log/mysql:rw
+
+networks:
+  default:
+    name: typeormsb-network-default
